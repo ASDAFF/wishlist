@@ -20,25 +20,17 @@ if ($all>0)
 	//пагинация
 	$last=(int)($all/5);
 	if ($all%5!=0) $last=$last+1;
-	$page=(int)$_GET['page'];
+	$page=(int)$_GET['PAGEN_1'];
 
 	if (($page<1) || ($page>$last))
-	LocalRedirect("/wishlist/?page=1");	
-	
+	LocalRedirect("/wishlist/?PAGEN_1=1");
+
 	$offset=($page>1)?($page-1)*5:0;
-	
-	if ($page!=1)
-	{
-	$pag['Первая']='1';
-	$pag['Предыдущая']=($page==1)?1:$page-1;
-	}
-	$pag[$page.' из '.$last]=$page;
-	if ($page!=$last)
-	{
-	$pag['Следующая']=($page==$last)?$last:$page+1;
-	$pag['Последняя']=$last;
-	}
-	$arResult['pag']=$pag;
+
+	$pagination=new CDBResult;
+	$pagination->InitFromArray($result);
+	$pagination->NavStart(5, false);
+
 	//получаем wishlist юзера
 	$result1=WishListTable::getList(array(
 	    'select'  => array('*'),
@@ -67,3 +59,9 @@ if ($all>0)
 	}
 }
 $this->IncludeComponentTemplate("wishlist");
+if($pagination->IsNavPrint())
+{
+	echo '<center>';
+	$pagination->NavPrint('');
+	echo '</center>';
+}

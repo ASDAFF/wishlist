@@ -10,10 +10,12 @@ if ($arResult['count']==0):
 
 function del(pid)
 {
-	if (confirm("Вы действительно удалить?")) {		
+	if (confirm("Вы действительно удалить?")) {
 	$.post( "/ajax.php", { "pid": pid, "act":"del"},function( data ) {
   	if (data==1)
   		$("#p"+pid).hide('slow');
+    else
+      alert('Не удалено');
 	});
 	}
 }
@@ -22,7 +24,7 @@ function del(pid)
 <style type="text/css">
 button {margin: 5px;}
 </style>
-<table class="table table-bordered">
+<table id="nav_start" class="table table-bordered">
     <thead>
       <tr>
         <th style="width:83px">Картинка</th>
