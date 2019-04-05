@@ -1,0 +1,1 @@
+<link rel="stylesheet" type="text/css" href="/bitrix/components/intaro/wishlist/templates/.default/styles/wishlist.css"/>
